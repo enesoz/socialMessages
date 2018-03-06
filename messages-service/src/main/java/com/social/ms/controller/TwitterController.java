@@ -1,7 +1,6 @@
 package com.social.ms.controller;
 
 import com.social.ms.model.SearchResult;
-import com.social.ms.service.TwitterClient;
 import com.social.ms.service.TwitterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,7 +16,7 @@ import javax.annotation.PostConstruct;
 
 @RestController
 @Component
-public class TwitterController implements TwitterClient {
+public class TwitterController {
 
     TwitterTemplate twitterTemplate;
     @Autowired
@@ -34,7 +33,6 @@ public class TwitterController implements TwitterClient {
 
     @RequestMapping(value = "/search/{keyword}", method = RequestMethod.GET)
     public SearchResult search(@PathVariable(value = "keyword") String searched) {
-        SearchResult result;
         SearchResults searchResults = twitterTemplate.searchOperations().search(searched);
         return service.saveAs(searched, searchResults);
     }

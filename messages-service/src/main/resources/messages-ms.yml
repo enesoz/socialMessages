@@ -6,6 +6,9 @@ spring:
 # Discovery Server Access
 eureka:
   instance:
+      leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
+      leaseExpirationDurationInSeconds: 2
+      instanceId: ${spring.cloud.client.hostname}:${spring.application.name}:${spring.application.instance_id:${server.port}}
   client:
     serviceUrl:
       defaultZone: http://localhost:1111/eureka/

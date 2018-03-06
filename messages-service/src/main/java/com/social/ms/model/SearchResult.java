@@ -1,5 +1,6 @@
 package com.social.ms.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
@@ -20,6 +21,10 @@ public class SearchResult {
     private long id;
     private String searched;
     private List<TweetBrief> tweets;
+
+    @JsonCreator
+    public SearchResult() {
+    }
 
     public SearchResult(String searched, List<TweetBrief> tweets) {
         this.searched = searched;

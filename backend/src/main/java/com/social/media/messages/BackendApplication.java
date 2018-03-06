@@ -11,9 +11,6 @@ import org.springframework.web.client.RestTemplate;
 @EnableDiscoveryClient
 public class BackendApplication {
 
-    public static final String MESSAGES_MS_URL
-            = "http://LAPTOP-VF3KI897";
-
     public static void main(String[] args) {
         System.setProperty("spring.config.name", "backend");
         SpringApplication.run(BackendApplication.class, args);

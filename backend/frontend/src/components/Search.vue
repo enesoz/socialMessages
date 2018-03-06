@@ -19,12 +19,16 @@
   export default {
     name: 'search',
     props: ['searchKey'],
-    data: {
-      searchKey: 'Beni ara'
+    data() {
+      return {
+        apiUrl: 'http://localhost:3333/search/'
+      }
     },
     methods: {
       searchFunction: function () {
-        console.log('search Me')
+        this.$axios.get(this.apiUrl + this.searchKey).then((response) => {
+          console.log(response.body)
+        })
       }
     }
   }
