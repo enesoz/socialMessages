@@ -1,5 +1,6 @@
 package com.social.backend.controller;
 
+import com.social.ms.model.SearchResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,13 +24,13 @@ public class SocialMessageController {
 
     @CrossOrigin
     @RequestMapping(value = "/search/{keyword}", method = RequestMethod.GET)
-    public String search(@PathVariable(value = "keyword") String searched) {
+    public SearchResult search(@PathVariable(value = "keyword") String searched) {
         try {
             URI messagesService = URI.create(String.format("http://%s:%s/%s", MESSAGE_SERVICE, MESSAGE_SERVICE_PORT, "search/" + searched)); // ... do something with the URI } }
-            return restTemplate.getForObject(messagesService, String.class);
+            return restTemplate.getForObject(messagesService, SearchResult.class);
         } catch (HttpServerErrorException e) {
             log.error("Message-Microservis throw error", e);
-            return e.getResponseBodyAsString();
+            throw e;
         }
     }
 }

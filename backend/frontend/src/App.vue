@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+    <header class="header-panel">
+      <h1>Social Messages Collector</h1>
+    </header>
+
     <router-view/>
   </div>
 </template>
