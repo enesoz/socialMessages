@@ -1,4 +1,4 @@
-package com.social.media.messages;
+package com.social.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

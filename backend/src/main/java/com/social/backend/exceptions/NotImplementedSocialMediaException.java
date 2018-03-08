@@ -1,4 +1,4 @@
-package com.social.media.messages.exceptions;
+package com.social.backend.exceptions;
 
 public class NotImplementedSocialMediaException extends Throwable {
 

@@ -21,6 +21,7 @@ public class SearchResult {
     private long id;
     private String searched;
     private List<TweetBrief> tweets;
+    private String originalResult;
 
     @JsonCreator
     public SearchResult() {

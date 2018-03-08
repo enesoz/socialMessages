@@ -3,8 +3,7 @@ package com.social.ms.service;
 import com.mongodb.MongoException;
 import com.social.ms.model.SearchResult;
 import com.social.ms.model.TweetBrief;
-import lombok.extern.java.Log;
-import org.slf4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.social.twitter.api.Tweet;
@@ -16,10 +15,9 @@ import java.util.stream.Collectors;
 
 
 @Service
-@Log
+@Slf4j
 public class TwitterService {
 
-    private Logger log;
 
     @Autowired
     MongoTemplate mongoTemplate;
@@ -27,6 +25,7 @@ public class TwitterService {
     public SearchResult saveAs(String searched, org.springframework.social.twitter.api.SearchResults result) {
         try {
             SearchResult retVal = SearchResult.createSearchResult(searched, extracTotweetBrief(result.getTweets()));
+
             mongoTemplate.save(retVal);
             return retVal;
         } catch (com.mongodb.MongoTimeoutException mongo) {
