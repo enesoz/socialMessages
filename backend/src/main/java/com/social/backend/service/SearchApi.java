@@ -1,8 +1,10 @@
 package com.social.backend.service;
 
-import java.util.List;
+import com.social.backend.exceptions.NotImplementedSocialMediaException;
 
 public interface SearchApi {
 
-    List search();
+    // return JSON value
+    String search(String searched) throws NotImplementedSocialMediaException;
+
 }

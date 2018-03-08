@@ -1,35 +1,31 @@
 package com.social.backend.controller;
 
+import com.social.backend.enums.SocialMediaType;
+import com.social.backend.exceptions.NotImplementedSocialMediaException;
+import com.social.backend.service.SearchApi;
+import com.social.backend.service.SearchBuilder;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpServerErrorException;
-import org.springframework.web.client.RestTemplate;
 
-import java.net.URI;
+import javax.websocket.server.PathParam;
+import java.util.Locale;
 
 @Slf4j
 @Component
 @RestController
 public class SocialMessageController {
 
-    private static final String MESSAGE_SERVICE = "messages";
-    private static final int MESSAGE_SERVICE_PORT = 2222;
-
-    @Autowired
-    RestTemplate restTemplate;
-
-
     @CrossOrigin
     @RequestMapping(value = "/search/{keyword}", method = RequestMethod.GET)
-    public String search(@PathVariable(value = "keyword") String searched) {
+    public String search(@PathVariable(value = "keyword") String searched, @PathParam(value = "type") String type) throws NotImplementedSocialMediaException, Exception {
         try {
-            URI messagesService = URI.create(String.format("http://%s:%s/%s", MESSAGE_SERVICE, MESSAGE_SERVICE_PORT, "search/" + searched)); // ... do something with the URI } }
-            return restTemplate.getForObject(messagesService, String.class);
-        } catch (HttpServerErrorException e) {
+            SearchApi searchApi = SearchBuilder.build(SocialMediaType.valueOf(type.toUpperCase(Locale.ENGLISH)));
+            return searchApi.search(searched);
+
+        } catch (Exception e) {
             log.error("Message-Microservis throw error", e);
-            return e.getResponseBodyAsString();
+            throw e;
         }
     }
 }

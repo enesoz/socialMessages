@@ -42,7 +42,7 @@ public class TwitterController {
         }
     }
 
-    @RequestMapping(value = "/search/{keyword}", method = RequestMethod.GET)
+    @RequestMapping(value = "twitter/search/{keyword}", method = RequestMethod.GET)
     public SearchResult search(@PathVariable(value = "keyword") String searched) {
         if (isConnectionAvaliable) {
             SearchResults searchResults = twitterTemplate.searchOperations().search(searched);
