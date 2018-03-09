@@ -29,4 +29,18 @@ socialMessages
 └── pom.xml     → Maven parent pom with modules
 ```
 
+After clone or import 
 
+´´´
+cd $project.basedir
+mvn clean install 
+mongod   // @see note1
+java -jar target\messages.0.0.1-SNAPSHOT.jar registration
+java -jar target\messages.0.0.1-SNAPSHOT.jar message-service
+java -jar target\messages.0.0.1-SNAPSHOT.jar backend
+cd backent\fronted
+npm run dev     //@see note2
+´´´
+
+*note1 : there is no specific mongo settings - if you want to use ,change message-service \resources\application.properties
+*note2 : [build, prod] which profile to use  you want 
