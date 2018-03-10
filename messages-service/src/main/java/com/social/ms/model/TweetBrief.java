@@ -21,13 +21,15 @@ public class TweetBrief {
     private Date createdAt;
     private String languageCode;
     private int retweetCount;
+    private String profileImageUrl;
 
-    public TweetBrief(String text, String from_user, Date createdAt, String languageCode, int retweetCount) {
+    public TweetBrief(String text, String from_user, Date createdAt, String languageCode, int retweetCount, String profileImageUrl) {
         this.text = text;
         this.from_user = from_user;
         this.createdAt = createdAt;
         this.languageCode = languageCode;
         this.retweetCount = retweetCount;
+        this.profileImageUrl = profileImageUrl;
     }
 
     @Override

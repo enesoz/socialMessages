@@ -24,7 +24,7 @@ public class TwitterService {
 
     public SearchResult saveAs(String searched, org.springframework.social.twitter.api.SearchResults result) {
         try {
-            SearchResult retVal = SearchResult.createSearchResult(searched, extracTotweetBrief(result.getTweets()));
+            SearchResult retVal = SearchResult.createSearchResult(searched, extracTotweetBrief(result.getTweets()), result);
 
             mongoTemplate.save(retVal);
             return retVal;
@@ -48,7 +48,7 @@ public class TwitterService {
         ArrayList<TweetBrief> targetList =
                 tweets.stream().
                         map(s -> {
-                            TweetBrief tweetBrief = new TweetBrief(s.getText(), s.getFromUser(), s.getCreatedAt(), s.getLanguageCode(), s.getRetweetCount());
+                            TweetBrief tweetBrief = new TweetBrief(s.getText(), s.getFromUser(), s.getCreatedAt(), s.getLanguageCode(), s.getRetweetCount(), s.getProfileImageUrl());
                             return tweetBrief;
                         }).
                         collect(Collectors.toCollection(ArrayList::new));

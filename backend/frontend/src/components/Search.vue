@@ -1,6 +1,8 @@
 <template>
-  <b-container fluid id="search">
 
+
+  <b-container fluid id="search">
+    <br/>
     <b-alert variant="danger" class="m-1" dismissible :show="exception" @closed="exception=false">
       <h4 class="alert-heading">{{errorInfo.errorStatusCode}}</h4>
       <p>
@@ -16,6 +18,8 @@
                         label="Search"
                         label-cols="3"
                         breakpoints="xl"
+                        description="Type a word "
+                        label-class="text-sm-right"
                         label-for="inputHorizontal">
             <b-input type="search" v-model="searchKey" id="inputHorizontal" size="xs"></b-input>
           </b-form-group>
@@ -46,6 +50,12 @@
         <b-col class="col-md-10">
           <b-table stripped hover caption :items="items.tweets" :fields="tweetBriefs" :current-page="currentPage"
                    :per-page="perPage">
+            <template slot="profileImageUrl" slot-scope="data">
+              <b-img rounded="circle" blank width="75" height="75" blank-color="#777" alt="img" class="m-1"
+                     v-bind:src="data.item.profileImageUrl">
+
+              </b-img>
+            </template>
           </b-table>
         </b-col>
         <b-col class="col-md-1"/>
@@ -71,11 +81,12 @@
       return {
         //datatables
         tweetBriefs: {
-          "text": {label: "Tweet", tdClass: "leftClass"},
+          //      profileImageUrl: {label: "Profile Photo"}, -- couldn' make it
+          "text": {label: "Tweet", tdClass: "text-left"},
           "from_user": {label: "User"},
           "createdAt": {
             label: "Tweet Date", formatter: (value, key, item) => {
-              return (new Date()).toLocaleDateString() + ' ' + (new Date().toLocaleTimeString())
+              return (new Date(value)).toLocaleDateString() + ' ' + (new Date(value).toLocaleTimeString())
             }, sortable: true
           },
           "languageCode": {label: "Lang.", sortable: true},
@@ -88,7 +99,7 @@
         //radiogroup
         selected: 'twitter',
         //input for search
-        searchKey: 'keyword',
+        searchKey: '',
         apiUrl: 'http://localhost:3333/search/',
         exception: false,
         errorInfo: {errorStatusCode: '', errorText: '', exception: ''}
@@ -106,11 +117,11 @@
           this.items = response.data;
         }).catch(error => {
           this.exception = true,
-          this.errorInfo = {
-            errorStatusCode: error.response.data.status,
-            errorText: error.response.data.error,
-            exception: error.response.data.message
-          }
+            this.errorInfo = {
+              errorStatusCode: error.response.data.status,
+              errorText: error.response.data.error,
+              exception: error.response.data.message
+            }
           console.log(this.errorInfo)
         })
       }
