@@ -49,6 +49,6 @@ npm run dev     //@see note2
 
 This Application Path : localhost:8080/
 #### No need to know
-Eureka Server Path    : localhost:1111/
-Message-Service Path  : localhost:2222/
-Backend  Path         : localhost:3333/
+*Eureka Server Path    : localhost:1111/
+*Message-Service Path  : localhost:2222/
+*Backend  Path         : localhost:3333/
