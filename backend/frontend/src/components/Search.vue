@@ -8,26 +8,35 @@
       </p>
       <hr/>
       {{errorInfo.exception}}
-
     </b-alert>
-
-
-    <b-form-group id="fieldsetHorizontal"
-                  horizontal
-                  :label-cols="3"
-                  breakpoint="md"
-                  description="Let us know your name."
-                  label="Enter a keyword"
-                  label-for="inputHorizontal">
-      <b-form-input type="search" v-model="searchKey" id="inputHorizontal"></b-form-input>
-
-      <b-form-checkbox-group v-model="selected"
-                             :options="options" label-class="text-sm-left"
-                             name="checkboxInline">
-      </b-form-checkbox-group>
-      <b-button variant="primary" v-on:click="searchFunction">Search</b-button>
-    </b-form-group>
-
+    <b-container>
+      <b-row>
+        <b-col cols="8">
+          <b-form-group horizontal
+                        label="Search"
+                        label-cols="3"
+                        breakpoints="xl"
+                        label-for="inputHorizontal">
+            <b-input type="search" v-model="searchKey" id="inputHorizontal" size="xs"></b-input>
+          </b-form-group>
+        </b-col>
+        <b-col>
+          <b-form-group horizontal>
+            <b-form-radio-group id="radios2" v-model="selected" name="radioSubComponent">
+              <b-form-radio value="twitter">
+                <icon name="twitter" scale="1"/>
+              </b-form-radio>
+              <b-form-radio value="instagram">
+                <icon name="instagram" scale="1"/>
+              </b-form-radio>
+            </b-form-radio-group>
+          </b-form-group>
+        </b-col>
+        <b-col>
+          <b-button variant="primary" v-on:click="searchFunction">Search</b-button>
+        </b-col>
+      </b-row>
+    </b-container>
     <br/>
     <hr/>
 
@@ -77,14 +86,8 @@
         currentPage: 1,
         perPage: 10,
         //radiogroup
-        selected: {},
-        options: [
-          {
-            value: 'twitter', text: 'tweeter', default: true
-          },
-          {
-            value: 'instagram', text: 'instagram'
-          }],
+        selected: 'twitter',
+        //input for search
         searchKey: 'keyword',
         apiUrl: 'http://localhost:3333/search/',
         exception: false,
@@ -102,7 +105,7 @@
         }).then((response) => {
           this.items = response.data;
         }).catch(error => {
-          this.exception = true
+          this.exception = true,
           this.errorInfo = {
             errorStatusCode: error.response.data.status,
             errorText: error.response.data.error,

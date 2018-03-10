@@ -5,17 +5,19 @@ import com.social.backend.exceptions.NotImplementedSocialMediaException;
 import com.social.backend.service.adapters.FlickerAdapter;
 import com.social.backend.service.adapters.InstagramAdapter;
 import com.social.backend.service.adapters.TwitterAdapter;
+import org.springframework.web.client.RestTemplate;
 
 public abstract class SearchBuilder implements SearchApi {
 
-    public static SearchApi build(SocialMediaType type) throws NotImplementedSocialMediaException {
+
+    public static SearchApi build(SocialMediaType type, RestTemplate template) throws NotImplementedSocialMediaException {
         switch (type) {
             case TWITTER:
-                return new TwitterAdapter();
+                return new TwitterAdapter(template);
             case INSTAGRAM:
-                return new InstagramAdapter();
+                return new InstagramAdapter(template);
             case FLICKR:
-                return new FlickerAdapter();
+                return new FlickerAdapter(template);
         }
         throw new NotImplementedSocialMediaException(type);
     }
