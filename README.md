@@ -35,12 +35,20 @@ socialMessages
 cd $project.basedir
 mvn clean install 
 mongod   // @see note1
-java -jar target\messages.0.0.1-SNAPSHOT.jar registration
-java -jar target\messages.0.0.1-SNAPSHOT.jar message-service
-java -jar target\messages.0.0.1-SNAPSHOT.jar backend
+java -jar registration\target\registration.0.0.1-SNAPSHOT.jar 
+java -jar message-service\target\message-service.0.0.1-SNAPSHOT.jar 
+java -jar backend\target\backend.0.0.1-SNAPSHOT.jar 
 cd backent\fronted
 npm run dev     //@see note2
 ```
 
 *note1 : there is no specific mongo settings - if you want to use ,change message-service \resources\application.properties
 *note2 : [build, prod] which profile to use  you want 
+
+### Paths 
+
+This Application Path : localhost:8080/
+#### No need to know
+Eureka Server Path    : localhost:1111/
+Message-Service Path  : localhost:2222/
+Backend  Path         : localhost:3333/
