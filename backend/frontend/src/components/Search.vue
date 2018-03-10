@@ -51,10 +51,11 @@
           <b-table stripped hover caption :items="items.tweets" :fields="tweetBriefs" :current-page="currentPage"
                    :per-page="perPage">
             <template slot="profileImageUrl" slot-scope="data">
-              <b-img rounded="circle" blank width="75" height="75" blank-color="#777" alt="img" class="m-1"
-                     v-bind:src="data.item.profileImageUrl">
-
-              </b-img>
+              <div>
+                <b-img rounded="circle" width="50" height="50" alt="img" class="m-1"
+                       :src="data.item.profileImageUrl">
+                </b-img>
+              </div>
             </template>
           </b-table>
         </b-col>
@@ -81,7 +82,7 @@
       return {
         //datatables
         tweetBriefs: {
-          //      profileImageUrl: {label: "Profile Photo"}, -- couldn' make it
+          profileImageUrl: {label: "Profile Photo"},
           "text": {label: "Tweet", tdClass: "text-left"},
           "from_user": {label: "User"},
           "createdAt": {
