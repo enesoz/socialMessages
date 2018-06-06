@@ -1,6 +1,6 @@
 #### socialMessages
 
-The purpose of this project made is learning some technologies and improve my code skills , Here example project for microservices with eureka , spring boot social api , vue.js as frontend tech , mongodb (nothing so much) and vs.
+The purpose of this project made is learning some technologies and improve my code skills , Here example project for microservices with eureka , spring boot social api , vue.js as frontend tech , mongodb (nothing so much) and etc.
 
 ## Setup Project
 
