@@ -1,7 +1,7 @@
 <template>
 
 
-  <b-container fluid id="search">
+  <b-container fluid id="search" v-on:keyup.enter="searchFunction">
     <br/>
     <b-alert variant="danger" class="m-1" dismissible :show="exception" @closed="exception=false">
       <h4 class="alert-heading">{{errorInfo.errorStatusCode}}</h4>
@@ -65,8 +65,13 @@
                     v-model="currentPage" :per-page="perPage">
       </b-pagination>
     </b-container>
-
+    <div class="footer-copyright text-center py-3 bottom">
+      <container fluid>
+        &copy; 2018 Copyright: <a href="https://github.com/enesoz"> enesozdemir </a>
+      </container>
+    </div>
   </b-container>
+
 </template>
 
 

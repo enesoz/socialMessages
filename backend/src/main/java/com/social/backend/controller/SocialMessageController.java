@@ -24,13 +24,9 @@ public class SocialMessageController {
     @CrossOrigin
     @RequestMapping(value = "/search/{keyword}", method = RequestMethod.GET)
     public String search(@PathVariable(value = "keyword") String searched, @PathParam(value = "type") String type) throws NotImplementedSocialMediaException, Exception {
-        try {
             SearchApi searchApi = SearchBuilder.build(SocialMediaType.valueOf(type.toUpperCase(Locale.ENGLISH)), template);
             return searchApi.search(searched);
 
-        } catch (Exception e) {
-            throw e;
-        }
     }
 }
 
