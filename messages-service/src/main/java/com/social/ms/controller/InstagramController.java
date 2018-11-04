@@ -11,6 +11,7 @@ import org.springframework.web.client.ResourceAccessException;
 @Component
 public class InstagramController {
 
+
     @RequestMapping(value = "/instagram/search/{keyword}", method = RequestMethod.GET)
     public Object search(@PathVariable(value = "keyword") String searched) {
         throw new ResourceAccessException("Not implemented yet");

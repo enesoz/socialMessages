@@ -51,4 +51,13 @@ public class TwitterController {
             throw new ResourceAccessException("Twitter Api is not avaliable now");
     }
 
+    @RequestMapping(value = "/search/{keyword}", method = RequestMethod.GET)
+    public SearchResults searchAsAdmin(@PathVariable(value = "keyword") String searched) {
+        if (isConnectionAvaliable) {
+            SearchResults searchResults = twitterTemplate.searchOperations().search(searched);
+            return searchResults;
+        } else
+            throw new ResourceAccessException("Twitter Api is not avaliable now");
+    }
+
 }
