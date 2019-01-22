@@ -22,8 +22,8 @@ public class TwitterAdapter extends SearchAdapter {
     @Override
     public String search(String searched) throws Exception {
         try {
-            URI messagesService = URI.create(String.format("http://%s:%s/%s/%s", MESSAGE_SERVICE, MESSAGE_SERVICE_PORT, SocialMediaType.TWITTER.toString(), "search/" + searched));
-            return restTemplate.getForObject(messagesService, String.class);
+            URI messagesService = URI.create(String.format("http://%s:%s/%s/%s", MESSAGE_SERVICE, MESSAGE_SERVICE_PORT, SocialMediaType.TWITTER.toString(), "search/"));
+            return restTemplate.postForObject(messagesService, searched, String.class);
         } catch (Exception e) {
             throw e;
         }

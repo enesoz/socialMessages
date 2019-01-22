@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import javax.websocket.server.PathParam;
 import java.util.Locale;
+import java.util.Map;
 
 @Slf4j
 @Component
@@ -22,10 +22,22 @@ public class SocialMessageController {
     RestTemplate template;
 
     @CrossOrigin
-    @RequestMapping(value = "/search/{keyword}", method = RequestMethod.GET)
-    public String search(@PathVariable(value = "keyword") String searched, @PathParam(value = "type") String type) throws NotImplementedSocialMediaException, Exception {
-            SearchApi searchApi = SearchBuilder.build(SocialMediaType.valueOf(type.toUpperCase(Locale.ENGLISH)), template);
-            return searchApi.search(searched);
+    @PostMapping(value = "/search", produces = "application/json", consumes = "application/json")
+    public String search(@RequestBody Map<String, String> body) throws NotImplementedSocialMediaException, Exception {
+
+        String type = body.get("type");
+        SearchApi searchApi = SearchBuilder.build(SocialMediaType.valueOf(type.toUpperCase(Locale.ENGLISH)), template);
+        String searched = body.get("searched");
+        return searchApi.search(searched);
+
+    }
+
+
+    @CrossOrigin
+    @RequestMapping(value = "/deneme/", method = RequestMethod.POST)
+    public String search() throws NotImplementedSocialMediaException, Exception {
+        SearchApi searchApi = SearchBuilder.build(SocialMediaType.TWITTER, template);
+        return searchApi.search("enes");
 
     }
 }

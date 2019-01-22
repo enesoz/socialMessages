@@ -8,9 +8,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.social.twitter.api.SearchResults;
 import org.springframework.social.twitter.api.impl.TwitterTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.ResourceAccessException;
 
@@ -42,8 +41,8 @@ public class TwitterController {
         }
     }
 
-    @RequestMapping(value = "twitter/search/{keyword}", method = RequestMethod.GET)
-    public SearchResult search(@PathVariable(value = "keyword") String searched) {
+    @PostMapping(value = "/twitter/search")
+    public SearchResult search(@RequestBody String searched) {
         if (isConnectionAvaliable) {
             SearchResults searchResults = twitterTemplate.searchOperations().search(searched);
             return service.saveAs(searched, searchResults);
@@ -51,8 +50,8 @@ public class TwitterController {
             throw new ResourceAccessException("Twitter Api is not avaliable now");
     }
 
-    @RequestMapping(value = "/search/{keyword}", method = RequestMethod.GET)
-    public SearchResults searchAsAdmin(@PathVariable(value = "keyword") String searched) {
+    @PostMapping("/search")
+    public SearchResults searchAsAdmin(@RequestBody String searched) {
         if (isConnectionAvaliable) {
             SearchResults searchResults = twitterTemplate.searchOperations().search(searched);
             return searchResults;

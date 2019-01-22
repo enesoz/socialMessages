@@ -21,7 +21,7 @@
                         description="Type a word "
                         label-class="text-sm-right"
                         label-for="inputHorizontal">
-            <b-input type="search" v-model="searchKey" id="inputHorizontal" size="xs"></b-input>
+            <b-input autofocus id="inputHorizontal" size="xs" type="search" v-model="searchKey"></b-input>
           </b-form-group>
         </b-col>
         <b-col>
@@ -115,10 +115,9 @@
 
     methods: {
       searchFunction: function () {
-        this.$axios.get(this.apiUrl + this.searchKey, {
-          params: {
-            type: this.selected
-          }
+        this.$axios.post(this.apiUrl, {
+          searched: this.searchKey,
+          type: this.selected
         }).then((response) => {
           this.items = response.data;
         }).catch(error => {
