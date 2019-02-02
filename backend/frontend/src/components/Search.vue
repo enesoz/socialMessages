@@ -3,14 +3,10 @@
 
   <b-container fluid id="search" v-on:keyup.enter="searchFunction">
     <br/>
-    <b-alert variant="danger" class="m-1" dismissible :show="exception" @closed="exception=false">
-      <h4 class="alert-heading">{{errorInfo.errorStatusCode}}</h4>
-      <p>
-        {{errorInfo.errorText}}
-      </p>
-      <hr/>
+    <b-alert :show="exception" @dismissed="exception=false" class="m-1" dismissible id="errorLbl" variant="danger">
       {{errorInfo.exception}}
     </b-alert>
+    <br/>
     <b-container>
       <b-row>
         <b-col cols="8">
@@ -18,7 +14,7 @@
                         label="Search"
                         label-cols="3"
                         breakpoints="xl"
-                        description="Type a word "
+                        v-bind:description="description"
                         label-class="text-sm-right"
                         label-for="inputHorizontal">
             <b-input autofocus id="inputHorizontal" size="xs" type="search" v-model="searchKey"></b-input>
@@ -66,9 +62,9 @@
       </b-pagination>
     </b-container>
     <div class="footer-copyright text-center py-3 bottom">
-      <container fluid>
+      <b-container fluid>
         &copy; 2018 Copyright: <a href="https://github.com/enesoz"> enesozdemir </a>
-      </container>
+      </b-container>
     </div>
   </b-container>
 
@@ -108,10 +104,20 @@
         searchKey: '',
         apiUrl: 'http://localhost:3333/search/',
         exception: false,
-        errorInfo: {errorStatusCode: '', errorText: '', exception: ''}
+        errorInfo: {exception: ''},
+        description: ''
       }
     },
-    watched: {},
+    watch: {
+      description: function (event) {
+        if (event) {
+          return 'Typing...';
+        } else {
+          return ' Type a word';
+        }
+      }
+    }
+    ,
 
     methods: {
       searchFunction: function () {
@@ -120,21 +126,22 @@
           type: this.selected
         }).then((response) => {
           this.items = response.data;
+          this.exception = false;
         }).catch(error => {
           this.exception = true,
             this.errorInfo = {
-              errorStatusCode: error.response.data.status,
-              errorText: error.response.data.error,
               exception: error.response.data.message
             }
           console.log(this.errorInfo)
         })
       }
-    },
+    }
+    ,
     computed: {
       formatted() {
         return new Date(this.value)
-      },
+      }
+      ,
     }
   }
 
