@@ -40,27 +40,10 @@
     <br/>
     <hr/>
 
-    <b-container fluid>
-      <b-row>
-        <b-col class="col-md-1"/>
-        <b-col class="col-md-10">
-          <b-table stripped hover caption :items="items.tweets" :fields="tweetBriefs" :current-page="currentPage"
-                   :per-page="perPage">
-            <template slot="profileImageUrl" slot-scope="data">
-              <div>
-                <b-img rounded="circle" width="50" height="50" alt="img" class="m-1"
-                       :src="data.item.profileImageUrl">
-                </b-img>
-              </div>
-            </template>
-          </b-table>
-        </b-col>
-        <b-col class="col-md-1"/>
-      </b-row>
-      <b-pagination v-if="items.tweets && items.tweets.length > 1" align="center" :total-rows="items.tweets.length"
-                    v-model="currentPage" :per-page="perPage">
-      </b-pagination>
-    </b-container>
+    <twitterTable :items="items" v-if="selected === 'twitter' "/>
+
+    <insta-table :items="items" v-if="selected === 'instagram'"/>
+
     <div class="footer-copyright text-center py-3 bottom">
       <b-container fluid>
         &copy; 2018 Copyright: <a href="https://github.com/enesoz"> enesozdemir </a>
@@ -72,80 +55,57 @@
 
 
 <script>
-
-
-  import Row from "bootstrap-vue/es/components/layout/row";
+  import TwitterTable from "./TwitterTable";
+  import InstaTable from "./InstagramTable";
 
   export default {
-    components: {Row},
-    name: 'search',
+    components: {InstaTable, TwitterTable},
+    name: "search",
     data() {
       return {
         //datatables
-        tweetBriefs: {
-          profileImageUrl: {label: "Profile Photo"},
-          "text": {label: "Tweet", tdClass: "text-left"},
-          "from_user": {label: "User"},
-          "createdAt": {
-            label: "Tweet Date", formatter: (value, key, item) => {
-              return (new Date(value)).toLocaleDateString() + ' ' + (new Date(value).toLocaleTimeString())
-            }, sortable: true
-          },
-          "languageCode": {label: "Lang.", sortable: true},
-          "retweetCount": {label: "RT Count", sortable: true}
-        },
         items: {},
-        //paginator
-        currentPage: 1,
-        perPage: 10,
         //radiogroup
-        selected: 'twitter',
+        selected: "twitter",
         //input for search
-        searchKey: '',
-        apiUrl: 'http://localhost:3333/search/',
+        searchKey: "",
+        apiUrl: "http://localhost:3333/search/",
         exception: false,
-        errorInfo: {exception: ''},
-        description: ''
-      }
+        errorInfo: {exception: ""},
+        typing: false
+      };
     },
-    watch: {
+    computed: {
       description: function (event) {
-        if (event) {
-          return 'Typing...';
+        if (this.searchKey.length <= 0) {
+          return "Type a word";
         } else {
-          return ' Type a word';
+          return "<br/>";
         }
       }
-    }
-    ,
+    },
 
     methods: {
       searchFunction: function () {
-        this.$axios.post(this.apiUrl, {
+        this.$axios
+          .post(this.apiUrl, {
           searched: this.searchKey,
           type: this.selected
-        }).then((response) => {
+          })
+          .then(response => {
           this.items = response.data;
           this.exception = false;
-        }).catch(error => {
-          this.exception = true,
-            this.errorInfo = {
+          })
+          .catch(error => {
+            (this.exception = true),
+              (this.errorInfo = {
               exception: error.response.data.message
-            }
-          console.log(this.errorInfo)
-        })
-      }
+              });
+            console.log(this.errorInfo);
+          });
+      },
     }
-    ,
-    computed: {
-      formatted() {
-        return new Date(this.value)
-      }
-      ,
-    }
-  }
-
-
+  };
 </script>
 
 <style scoped>
