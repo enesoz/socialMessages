@@ -13,7 +13,7 @@ target/
 .idea
 *.iws
 *.iml
-*.ipr
+*.iprv
 
 ### NetBeans ###
 nbproject/private/
@@ -22,3 +22,5 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+application.properties
