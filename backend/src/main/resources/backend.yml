@@ -21,7 +21,7 @@ eureka:
       leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
       leaseExpirationDurationInSeconds: 2
       metadataMap:
-          instanceId: ${spring.cloud.client.hostname}:${spring.application.name}:${spring.application.instance_id:${server.port}}}
+        instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
   client:
       serviceUrl:
             defaultZone: http://localhost:1111/eureka/
