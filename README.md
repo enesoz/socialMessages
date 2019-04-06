@@ -55,4 +55,4 @@ This Application Path : localhost:8080/
 
 # Here it is
 
-![localhost-first-run](https://github.com/enesoz/socialMessages/blob/master/backend/frontend/src/assets/localhost-first-run.PNG)
+![localhost-first-run](https://github.com/enesoz/socialMessages/blob/master/backend/message-frontend/src/assets/localhost-first-run.PNG)
