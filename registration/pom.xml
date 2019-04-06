@@ -8,6 +8,10 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
+    <properties>
+        <docker.image.prefix>social</docker.image.prefix>
+    </properties>
+
     <parent>
         <groupId>com.social.media</groupId>
         <artifactId>messages</artifactId>

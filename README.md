@@ -14,13 +14,15 @@ The purpose of this project made is learning some technologies and improve my co
 
 *nodejs
 
+*vue . vue-cli ,bootstrap-vue ,router , axios
+
 ### Project Setup
 
 
 ```
 socialMessages
 ├─┬ backend     → backend module with Spring Boot stuff , eureka client
-│ ├── frontend  → frontend module with Vue.js stuff
+│ ├── message-frontend  → frontend module with Vue.js stuff
 │ └── pom.xml
 ├─┬ message-service    → microservices include spring-social api and mongo , eureka client
 │ └── pom.xml
@@ -39,7 +41,7 @@ java -jar registration\target\registration.0.0.1-SNAPSHOT.jar
 java -jar message-service\target\message-service.0.0.1-SNAPSHOT.jar 
 java -jar backend\target\backend.0.0.1-SNAPSHOT.jar 
 cd backent\fronted
-npm run dev     //@see note2
+npm run serve     //@see note2
 ```
 
 *note1 : there is no specific mongo settings - if you want to use ,change message-service \resources\application.properties
