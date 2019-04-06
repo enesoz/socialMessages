@@ -55,10 +55,10 @@
 
 
 <script>
-  import TwitterTable from "./TwitterTable";
-  import InstaTable from "./InstagramTable";
+    import TwitterTable from "./TwitterTable";
+    import InstaTable from "./InstagramTable";
 
-  export default {
+    export default {
     components: {InstaTable, TwitterTable},
     name: "search",
     data() {
@@ -76,11 +76,11 @@
       };
     },
     computed: {
-      description: function (event) {
+        description: function () {
         if (this.searchKey.length <= 0) {
           return "Type a word";
         } else {
-          return "<br/>";
+            return;
         }
       }
     },
