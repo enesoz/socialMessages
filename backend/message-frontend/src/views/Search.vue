@@ -24,10 +24,10 @@
           <b-form-group horizontal>
             <b-form-radio-group id="radios2" v-model="selected" name="radioSubComponent">
               <b-form-radio value="twitter">
-                <icon name="twitter" scale="1"/>
+                <icon icon="twitter" scale="1"/>
               </b-form-radio>
               <b-form-radio value="instagram">
-                <icon name="instagram" scale="1"/>
+                <icon icon="instagram" scale="1"/>
               </b-form-radio>
             </b-form-radio-group>
           </b-form-group>
@@ -55,10 +55,10 @@
 
 
 <script>
-    import TwitterTable from "./TwitterTable";
-    import InstaTable from "./InstagramTable";
+  import TwitterTable from "./TwitterTable";
+  import InstaTable from "./InstagramTable";
 
-    export default {
+  export default {
     components: {InstaTable, TwitterTable},
     name: "search",
     data() {
@@ -101,7 +101,6 @@
               (this.errorInfo = {
               exception: error.response.data.message
               });
-            console.log(this.errorInfo);
           });
       },
     }

@@ -6,8 +6,8 @@ spring:
 # Discovery Server Access
 eureka:
   instance:
-      leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
-      leaseExpirationDurationInSeconds: 2
+    leaseRenewalIntervalInSeconds: 30
+    leaseExpirationDurationInSeconds: 90
       instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
   client:
     serviceUrl:
