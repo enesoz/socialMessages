@@ -1,114 +1,124 @@
 <template>
 
 
-  <b-container fluid id="search" v-on:keyup.enter="searchFunction">
-    <br/>
-    <b-alert :show="exception" @dismissed="exception=false" class="m-1" dismissible id="errorLbl" variant="danger">
-      {{errorInfo.exception}}
-    </b-alert>
-    <br/>
-    <b-container>
-      <b-row>
-        <b-col cols="8">
-          <b-form-group horizontal
-                        label="Search"
-                        label-cols="3"
-                        breakpoints="xl"
-                        v-bind:description="description"
-                        label-class="text-sm-right"
-                        label-for="inputHorizontal">
-            <b-input autofocus id="inputHorizontal" size="xs" type="search" v-model="searchKey"></b-input>
-          </b-form-group>
-        </b-col>
-        <b-col>
-          <b-form-group horizontal>
-            <b-form-radio-group id="radios2" v-model="selected" name="radioSubComponent">
-              <b-form-radio value="twitter">
-                <icon icon="twitter" scale="1"/>
-              </b-form-radio>
-              <b-form-radio value="instagram">
-                <icon icon="instagram" scale="1"/>
-              </b-form-radio>
-            </b-form-radio-group>
-          </b-form-group>
-        </b-col>
-        <b-col>
-          <b-button variant="primary" v-on:click="searchFunction">Search</b-button>
-        </b-col>
-      </b-row>
+    <b-container fluid id="search" v-on:keyup.enter="searchFunction">
+        <br/>
+        <b-alert :show="exception" @dismissed="exception=false" class="m-1" dismissible id="errorLbl" variant="danger">
+            {{errorInfo.exception}}
+        </b-alert>
+        <br/>
+        <b-container>
+            <b-row>
+                <b-col cols="8">
+                    <b-form-group breakpoints="xl"
+                                  horizontal
+                                  label="Search"
+                                  label-class="text-sm-right"
+                                  label-cols="3"
+                                  label-for="inputHorizontal"
+                                  v-bind:description="description">
+                        <b-input autofocus id="inputHorizontal" size="xs" type="search" v-model="searchKey"></b-input>
+                    </b-form-group>
+                </b-col>
+                <b-col>
+                    <b-form-group horizontal>
+                        <b-form-radio-group id="radios2" name="radioSubComponent" v-model="selected">
+                            <b-form-radio value="twitter">
+                                <font-awesome-icon :icon="['fab', 'twitter']" class="icon alt"/>
+                            </b-form-radio>
+                            <b-form-radio value="instagram">
+                                <font-awesome-icon :icon="['fab', 'instagram']" class="icon alt"/>
+                            </b-form-radio>
+                        </b-form-radio-group>
+                    </b-form-group>
+                </b-col>
+                <b-col>
+                    <b-button v-on:click="searchFunction" variant="primary">Search</b-button>
+                </b-col>
+            </b-row>
+        </b-container>
+        <br/>
+        <hr/>
+
+        <twitterTable :items="items" v-if="selected === 'twitter' "/>
+
+        <insta-table :items="items" v-if="selected === 'instagram'"/>
+
+        <div class="footer-copyright text-center py-3 bottom">
+            <b-container fluid>
+                &copy; 2018 Copyright: <a href="https://github.com/enesoz"> enesozdemir </a>
+            </b-container>
+        </div>
     </b-container>
-    <br/>
-    <hr/>
-
-    <twitterTable :items="items" v-if="selected === 'twitter' "/>
-
-    <insta-table :items="items" v-if="selected === 'instagram'"/>
-
-    <div class="footer-copyright text-center py-3 bottom">
-      <b-container fluid>
-        &copy; 2018 Copyright: <a href="https://github.com/enesoz"> enesozdemir </a>
-      </b-container>
-    </div>
-  </b-container>
 
 </template>
 
 
 <script>
-  import TwitterTable from "./TwitterTable";
-  import InstaTable from "./InstagramTable";
+    import TwitterTable from "./TwitterTable";
+    import InstaTable from "./InstagramTable";
 
-  export default {
-    components: {InstaTable, TwitterTable},
-    name: "search",
-    data() {
-      return {
-        //datatables
-        items: {},
-        //radiogroup
-        selected: "twitter",
-        //input for search
-        searchKey: "",
-        apiUrl: "http://localhost:3333/search/",
-        exception: false,
-        errorInfo: {exception: ""},
-        typing: false
-      };
-    },
-    computed: {
-        description: function () {
-        if (this.searchKey.length <= 0) {
-          return "Type a word";
-        } else {
-            return;
+    export default {
+        components: {InstaTable, TwitterTable},
+        name: "search",
+        data() {
+            return {
+                //datatables
+                items: {},
+                //radiogroup
+                selected: "twitter",
+                //input for search
+                searchKey: "",
+                apiUrl: "http://localhost:3333/search/",
+                exception: false,
+                errorInfo: {exception: ""},
+                typing: false
+            };
+        },
+        computed: {
+            description: function () {
+                if (this.searchKey.length <= 0) {
+                    return "Type a word";
+                } else {
+                    return "\n";
+                }
+            }
+        },
+
+        methods: {
+            searchFunction: function () {
+                this.$axios
+                    .post(this.apiUrl, {
+                        searched: this.searchKey,
+                        type: this.selected
+                    })
+                    .then(response => {
+                        this.items = response.data;
+                        this.exception = false;
+                    })
+                    .catch(error => {
+                        (this.exception = true),
+                            (this.errorInfo = {
+                                exception: error.response.data.message
+                            });
+                    });
+            }, authorized: function () {
+                this.axios.post("http://localhost:2222/instagram/authorize/").then(a => {
+                    let route = this.$router.resolve(a.data); // This also works.
+                    window.open(a.data, "_blank")
+                })
+            }
+        },
+
+        beforeMount() {
+            this.authorized();
         }
-      }
-    },
-
-    methods: {
-      searchFunction: function () {
-        this.$axios
-          .post(this.apiUrl, {
-          searched: this.searchKey,
-          type: this.selected
-          })
-          .then(response => {
-          this.items = response.data;
-          this.exception = false;
-          })
-          .catch(error => {
-            (this.exception = true),
-              (this.errorInfo = {
-              exception: error.response.data.message
-              });
-          });
-      },
     }
-  };
+
 </script>
 
 <style scoped>
-  leftClass {
-    text-align: left;
-  }
+    leftClass {
+        text-align: left;
+    }
 </style>

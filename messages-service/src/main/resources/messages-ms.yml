@@ -1,19 +1,18 @@
 # Spring properties
 spring:
   application:
-     name: messages
+    name: messages
 
 # Discovery Server Access
 eureka:
   instance:
-    leaseRenewalIntervalInSeconds: 30
-    leaseExpirationDurationInSeconds: 90
-      instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    leaseRenewalIntervalInSeconds: 5
+    leaseExpirationDurationInSeconds: 2
+    instanceId:  ${spring.application.name}:${spring.application.instance_id:${random.value}}
   client:
     serviceUrl:
       defaultZone: http://localhost:1111/eureka/
 
-
 # HTTP Server
 server:
-  port: 2222   # HTTP (
+  port: 2222   # HTTP

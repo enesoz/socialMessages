@@ -6,15 +6,15 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
 import {library} from '@fortawesome/fontawesome-svg-core'
-import {faCoffee} from '@fortawesome/free-solid-svg-icons'
+import {faInstagram, faTwitter,} from "@fortawesome/free-brands-svg-icons";
 
 import Router from 'vue-router'
 import axios from 'axios'
 import router from './router'
 
-library.add(faCoffee)
+library.add(faTwitter, faInstagram)
 
-Vue.component('icon', FontAwesomeIcon)
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(BootstrapVue)
 Vue.use(Router)
 Object.defineProperty(Vue.prototype, '$axnpm ios', {value: axios});

@@ -6,8 +6,8 @@
         <b-table :fields="tweetBriefs" :items="items.tweets" caption hover stripped>
           <template slot="profileImageUrl" slot-scope="data">
             <div>
-              <b-img :src="data.item.profileImageUrl" alt="img" class="m-1" height="50" rounded="circle"
-                     width="50">
+                <b-img :src="data.item.profileImageUrl" alt="img" class="m-1" height="40" rounded="circle"
+                       width="40">
               </b-img>
             </div>
           </template>

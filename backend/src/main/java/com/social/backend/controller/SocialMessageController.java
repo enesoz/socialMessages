@@ -27,11 +27,14 @@ public class SocialMessageController {
     @CrossOrigin
     @PostMapping(value = "/search", produces = "application/json", consumes = "application/json")
     public String search(@RequestBody Map<String, String> body) throws NotImplementedSocialMediaException, Exception {
-
-        String type = body.get("type");
-        SearchApi searchApi = SearchBuilder.build(SocialMediaType.valueOf(type.toUpperCase(Locale.ENGLISH)), template);
-        String searched = body.get("searched");
-        return searchApi.search(searched);
+        try {
+            String type = body.get("type");
+            SearchApi searchApi = SearchBuilder.build(SocialMediaType.valueOf(type.toUpperCase(Locale.ENGLISH)), template);
+            String searched = body.get("searched");
+            return searchApi.search(searched);
+        } catch (Exception e) {
+            return e.getMessage();
+        }
 
     }
 
