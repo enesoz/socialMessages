@@ -86,7 +86,7 @@ public class InstagramController {
         return template.getForObject(searchUrl.build(), String.class);
     }
 
-    @RequestMapping(value = "/auth/callbac  k", method = RequestMethod.GET)
+    @RequestMapping(value = "/auth/callback", method = RequestMethod.GET)
     public String redirect(@RequestParam Map<String, String> allParams) throws Exception {
         getAccessToken(allParams.get("code"));
         return "window.close();";
