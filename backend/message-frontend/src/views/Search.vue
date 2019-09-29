@@ -103,8 +103,8 @@
                             });
                     });
             }, authorized: function () {
-                this.axios.post("http://localhost:2222/instagram/authorize/").then(a => {
-                    let route = this.$router.resolve(a.data); // This also works.
+                this.axios.post("http://localhost:2222/instagram/authorize").then(a => {
+                    this.$router.resolve(a.data); // This also works.
                     window.open(a.data, "_blank")
                 })
             }

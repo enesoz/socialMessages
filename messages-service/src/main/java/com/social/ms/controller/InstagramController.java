@@ -45,7 +45,7 @@ public class InstagramController {
     public URI authorize() {
         URIBuilder authorizeUrl = URIBuilder.fromUri(this.authorizeUrl).queryParam("client_id", clientId)
                 .queryParam("redirect_uri", REDIRECT_URI)
-                .queryParam("response_type", "code");
+                .queryParam("response_type", "code").queryParam("scope", "basic");
         return authorizeUrl.build();
     }
 
