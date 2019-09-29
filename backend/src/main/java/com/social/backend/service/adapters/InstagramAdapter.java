@@ -20,8 +20,8 @@ public class InstagramAdapter extends SearchAdapter {
     @Override
     public String search(String searched) throws NotImplementedSocialMediaException {
         try {
-            URI messagesService = URI.create(String.format("http://%s:%s/%s/%s", MESSAGE_SERVICE, MESSAGE_SERVICE_PORT, SocialMediaType.INSTAGRAM.toString(), "search/"));
-            return restTemplate.postForObject(messagesService, searched, String.class);
+            URI messagesService = URI.create(String.format("http://%s:%s/%s/%s/%s", MESSAGE_SERVICE, MESSAGE_SERVICE_PORT, SocialMediaType.INSTAGRAM.toString(), "search/", searched));
+            return restTemplate.getForObject(messagesService, String.class);
         } catch (Exception e) {
             throw e;
         }
