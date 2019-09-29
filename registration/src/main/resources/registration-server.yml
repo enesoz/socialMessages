@@ -1,13 +1,12 @@
 # Configure this Discovery Server
 eureka:
   server:
-    eviction-interval-timer-in-ms: 1000
   instance:
     hostname: localhost
   client:  # Not a client, don't register with yourself
     registerWithEureka: false
     fetchRegistry: false
-    enableSelfPreservation: true
+    enableSelfPreservation: false
 
 spring:
       application:

@@ -7,7 +7,7 @@ spring:
   thymeleaf:
     cache: false       # Allow Thymeleaf templates to be reloaded at runtime
     prefix: classpath:/webapp-server/templates/    # Trailing / mandatory
-                       # Template location for this application only
+    # Template location for this application only
 
 # Map the error path to error templates (for Thymeleaf)
 error:
@@ -18,13 +18,12 @@ error:
 #  2. Reduce lease-renewal time so processes register more quickly
 eureka:
   instance:
-      leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
-      leaseExpirationDurationInSeconds: 2
-      metadataMap:
-        instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
+    leaseExpirationDurationInSeconds: 2
+    instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
   client:
-      serviceUrl:
-            defaultZone: http://localhost:1111/eureka/
+    serviceUrl:
+      defaultZone: http://localhost:1111/eureka/
 
 
 # HTTP Server
