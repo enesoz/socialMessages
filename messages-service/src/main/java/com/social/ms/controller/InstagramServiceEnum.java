@@ -11,4 +11,8 @@ public enum InstagramServiceEnum {
     InstagramServiceEnum(String url) {
         this.url = url;
     }
+
+    public String getUrl() {
+        return url;
+    }
 }

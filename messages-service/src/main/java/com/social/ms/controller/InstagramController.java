@@ -82,14 +82,14 @@ public class InstagramController {
     @GetMapping(value = "/search/{searched}")
     public Object search(@PathVariable(name = "searched") String searched) {
 
-        URIBuilder searchUrl = URIBuilder.fromUri(API_URL_BASE + "self/media/recent/").queryParam("access_token", access_token);
-        return template.postForObject(searchUrl.build(), searched, String.class);
+        URIBuilder searchUrl = URIBuilder.fromUri(InstagramServiceEnum.USER_SELF_MEDIA_RECENT.getUrl()).queryParam("access_token", access_token);
+        return template.getForObject(searchUrl.build(), String.class);
     }
 
-    @RequestMapping(value = "/auth/callback", method = RequestMethod.GET)
+    @RequestMapping(value = "/auth/callbac  k", method = RequestMethod.GET)
     public String redirect(@RequestParam Map<String, String> allParams) throws Exception {
         getAccessToken(allParams.get("code"));
-        return "You can close this tab";
+        return "window.close();";
     }
 
     @RequestMapping(value = "/access", method = RequestMethod.POST)
