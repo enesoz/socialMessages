@@ -99,10 +99,9 @@
                             <overwrite>true</overwrite>
                             <resources>
                                 <resource>
-                                    <directory>${project.basedir}/frontend/target/dist</directory>
+                                    <directory>${project.basedir}/message-frontend/dist</directory>
                                     <includes>
-                                        <include>static/</include>
-                                        <include>index.html</include>
+                                        <include>**/*</include>
                                     </includes>
                                 </resource>
                             </resources>

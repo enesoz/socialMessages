@@ -1,9 +1,17 @@
 <template>
     <b-container>
         <b-row>
-            <div class="m-md-0" v-bind:key="item.id" v-for="item in items.data">
-                <b-img fluid-grow style="align-items: center" v-bind:src="item.images.standard_resolution.url"/>
-            </div>
+            <b-carousel :interval="4000"
+                        background="#ababab"
+                        controls
+                        fade
+                        img-height="480"
+                        img-width="1024"
+                        indicators
+                        ref="myCarousel"
+                        style="text-shadow: 1px 1px 2px #333;">
+                <b-carousel-slide img v-model="items.data.images.standard_resolution.url"/>
+            </b-carousel>
         </b-row>
     </b-container>
 </template>
@@ -17,9 +25,21 @@
 
         data() {
             return {
-                fields: {
-                    images: {label: "Photographs"}
-                }
+                slide: 0,
+                sliding: null
+            }
+        },
+        methods: {
+            prev() {
+                this.$refs.myCarousel.prev()
+            },
+            next() {
+                this.$refs.myCarousel.next()
+            }
+        }, computed: {
+            onlyImg: function () {
+                console.log(this.items.data);
+                return typeof this.items.data != "undefined" ? this.items.data.map(a => a.images.standard_resolution.url) : "";
             }
         }
     }

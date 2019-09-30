@@ -1,7 +1,6 @@
 package com.social.backend.service.adapters;
 
 import com.social.backend.enums.SocialMediaType;
-import com.social.backend.exceptions.NotImplementedSocialMediaException;
 import com.social.backend.service.SearchAdapter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -18,7 +17,7 @@ public class InstagramAdapter extends SearchAdapter {
     }
 
     @Override
-    public String search(String searched) throws NotImplementedSocialMediaException {
+    public String search(String searched) {
         try {
             URI messagesService = URI.create(String.format("http://%s:%s/%s/%s/%s", MESSAGE_SERVICE, MESSAGE_SERVICE_PORT, SocialMediaType.INSTAGRAM.toString(), "search/", searched));
             return restTemplate.getForObject(messagesService, String.class);

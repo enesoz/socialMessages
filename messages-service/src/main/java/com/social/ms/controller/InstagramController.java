@@ -23,9 +23,7 @@ import java.util.Map;
 @Slf4j
 public class InstagramController {
 
-    private static final String API_URL_BASE = "https://api.instagram.com/v1/";
     private static final String REDIRECT_URI = "http://localhost:2222/instagram/auth/callback";
-    private static final String AUTHORIZATION_REDIRECT_URI = "http://localhost:2222/instagram/access";
 
     RestTemplate template = new RestTemplate();
 
@@ -92,10 +90,4 @@ public class InstagramController {
         return "window.close();";
     }
 
-    @RequestMapping(value = "/access", method = RequestMethod.POST)
-    public String access_token(@RequestBody String access) {
-        this.access_token = access;
-        log.info("Access_Token : {}", access);
-        return access;
-    }
 }
