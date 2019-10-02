@@ -1,5 +1,8 @@
 package com.social.ms.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.social.ms.model.InstagramBrief;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.json.GsonJsonParser;
@@ -14,9 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.net.URI;
-import java.util.Arrays;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/instagram")
@@ -77,11 +80,26 @@ public class InstagramController {
 
     }
 
-    @GetMapping(value = "/search/{searched}")
-    public Object search(@PathVariable(name = "searched") String searched) {
+    @GetMapping("/all")
+    public List<InstagramBrief> getAll() throws IOException {
 
         URIBuilder searchUrl = URIBuilder.fromUri(InstagramServiceEnum.USER_SELF_MEDIA_RECENT.getUrl()).queryParam("access_token", access_token);
-        return template.getForObject(searchUrl.build(), String.class);
+        String forObject = template.getForObject(searchUrl.build(), String.class);
+        List<InstagramBrief> retVal = new ArrayList<>();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode = objectMapper.readTree(forObject);
+        JsonNode data = jsonNode.get("data");
+        data.elements().forEachRemaining(a -> {
+            retVal.add(InstagramBrief.createInstagramBrief(a.get("id").asText(), a.get("images").get("standard_resolution").get("url").asText(), a.get("caption").isNull() ? "" : a.get("caption").get("text").asText(""), new Date(a.get("created_time").asLong()), a.get("link").asText(), a.get("likes").get("count").asInt()));
+        });
+        return retVal;
+    }
+
+    @GetMapping(value = "/search/{searched}")
+    public Object search(@PathVariable(name = "searched") String searched) throws IOException {
+        // Due to instagram odd access rule for now get all pic for account
+        return getAll();
     }
 
     @RequestMapping(value = "/auth/callback", method = RequestMethod.GET)
