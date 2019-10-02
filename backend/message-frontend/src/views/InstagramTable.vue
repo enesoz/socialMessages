@@ -5,12 +5,17 @@
                         background="#ababab"
                         controls
                         fade
-                        img-height="480"
-                        img-width="1024"
+                        img-height="720"
+                        img-width="720"
                         indicators
                         ref="myCarousel"
                         style="text-shadow: 1px 1px 2px #333;">
-                <b-carousel-slide img v-model="items.data.images.standard_resolution.url"/>
+                <b-carousel-slide :caption="prepareCaption(item.caption)"
+                                  :img-src="item.images.standard_resolution.url"
+                                  :key="item.id"
+                                  style="height: 720px;width: 720px"
+                                  v-for="item in items.data"
+                ></b-carousel-slide>
             </b-carousel>
         </b-row>
     </b-container>
@@ -30,16 +35,8 @@
             }
         },
         methods: {
-            prev() {
-                this.$refs.myCarousel.prev()
-            },
-            next() {
-                this.$refs.myCarousel.next()
-            }
-        }, computed: {
-            onlyImg: function () {
-                console.log(this.items.data);
-                return typeof this.items.data != "undefined" ? this.items.data.map(a => a.images.standard_resolution.url) : "";
+            prepareCaption: function (caption) {
+                return caption == "undefined" || caption == null ? "" : caption.text;
             }
         }
     }
